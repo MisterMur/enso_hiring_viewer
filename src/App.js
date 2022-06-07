@@ -1,12 +1,11 @@
-import { SignalView } from 'views';
-
+import { SignalView } from "views";
 
 const App = () => {
   return (
     <div className="App">
-      <SignalView/>
+      <SignalView />
     </div>
   );
-}
+};
 
 export default App;
