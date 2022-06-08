@@ -13,6 +13,8 @@ const StyledEvent = styled.div`
   ref: ${(props) => props.eventRef};
 `;
 const LeftBorder = styled.div`
+  display: ${(props) => props.display};
+
   background: purple;
   opacity: 0.5;
   width: 10px;
@@ -23,6 +25,7 @@ const LeftBorder = styled.div`
 `;
 //   ref: ${(props) => props.eventRef};
 const RightBorder = styled.div`
+  display: ${(props) => props.display};
   background: purple;
   opacity: 0.5;
   position: relative;
@@ -40,7 +43,6 @@ const Event = (props) => {
 
   const [start, setStart] = useState(startPos);
   const [end, setEnd] = useState(endPos);
-  console.log("mousedown ", mouseDown);
 
   /**************  Start Resize *****************/
   const handleEventStartMouseDown = (e) => {
@@ -62,13 +64,11 @@ const Event = (props) => {
     setMouseDown(false);
     handleEventStartMouseUp(e);
   };
-
   /**************  End Resize *****************/
   const handleRightClick = (e) => {};
   const handleEventEndMouseDown = (e) => {
-    console.log("in handle end mouse down");
-    setMouseDown(true);
     setEndResized(true);
+    setMouseDown(true);
     setEnd(e.clientX);
   };
   const handleEventEndMouseUp = (e) => {
@@ -119,6 +119,7 @@ const Event = (props) => {
   return (
     <div style={{ display: "flex", height: "110px", position: "absolute" }}>
       <LeftBorder
+        display={startPos ? "inline-block" : "none"}
         offsetLeft={startPos}
         onMouseUp={handleEventStartMouseUp}
         onMouseMove={handleEventStartMouseMove}
@@ -127,6 +128,7 @@ const Event = (props) => {
       />
       {renderEvent()}
       <RightBorder
+        display={startPos ? "inline-block" : "none"}
         offsetLeft={endPos}
         onClick={handleRightClick}
         onMouseUp={handleEventEndMouseUp}

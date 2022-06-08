@@ -56,7 +56,6 @@ const SignalView = () => {
     setMouseDown(false);
     handleMouseUp(e);
   };
-  console.log("in overlay mousdown", mouseDown);
 
   return (
     <Container>
@@ -82,7 +81,6 @@ const SignalView = () => {
               height={chartWrapperRef.current?.clientHeight}
               width={e.end - e.start}
               offsetLeft={e.start}
-              //   ref={eventRef}
             />
           );
         })}
@@ -94,7 +92,6 @@ const SignalView = () => {
           endPos={end}
           width={end - start}
           offsetLeft={start}
-          //   ref={eventRef}
         />
         {/* You can place events in here as children if you so choose */}
       </Overlay>
