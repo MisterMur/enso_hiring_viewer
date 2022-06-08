@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledEvent = styled.div`
@@ -65,7 +65,6 @@ const Event = (props) => {
     handleEventStartMouseUp(e);
   };
   /**************  End Resize *****************/
-  const handleRightClick = (e) => {};
   const handleEventEndMouseDown = (e) => {
     setEndResized(true);
     setMouseDown(true);
@@ -130,7 +129,6 @@ const Event = (props) => {
       <RightBorder
         display={startPos ? "inline-block" : "none"}
         offsetLeft={endPos}
-        onClick={handleRightClick}
         onMouseUp={handleEventEndMouseUp}
         onMouseMove={handleEventEndMouseMove}
         onMouseLeave={handleEventEndMouseLeave}
