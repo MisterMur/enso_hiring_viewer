@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { SineWave } from "components";
-
+import Event from "./Event";
 const Container = styled.div`
   position: relative;
 `;
@@ -16,19 +16,6 @@ const Overlay = styled.div`
   z-index: 10;
 `;
 
-const Event = styled.div`
-  background: ${(props) => (props.isMouseDown ? "blue" : "green")};
-  opacity: 0.5;
-  width: ${(props) => (props.width ? props.width : 0)}px;
-  height: 110px;
-  position: absolute;
-  border-radius: 10%;
-  top: 10px;
-  left: ${(props) => (props.offsetLeft ? props.offsetLeft : 0)}px;
-  ref: ${(props) => props.eventRef};
-  color: purple;
-`;
-
 // The chart canvas will be the same height/width as the ChartWrapper
 // https://www.chartjs.org/docs/3.2.1/configuration/responsive.html#important-note
 const ChartWrapper = styled.div``;
@@ -36,7 +23,8 @@ const ChartWrapper = styled.div``;
 const SignalView = () => {
   // Access the height of the chart as chartWrapperRef.current?.clientHeight to determine the height to set on events
   const chartWrapperRef = useRef();
-  const eventRef = useRef();
+  //   const eventRef = useRef();
+
   const [mouseDown, setMouseDown] = useState(false);
 
   const [start, setStart] = useState(null);
@@ -57,6 +45,7 @@ const SignalView = () => {
     setMouseDown(false);
 
     setEnd(e.clientX);
+    // setEvents([...events]);
     setEvents([...events, { start, end }]);
   };
   const handleMouseMove = (e) => {
@@ -67,6 +56,7 @@ const SignalView = () => {
     setMouseDown(false);
     handleMouseUp(e);
   };
+  console.log("in overlay mousdown", mouseDown);
 
   return (
     <Container>
@@ -87,8 +77,12 @@ const SignalView = () => {
             <Event
               key={idx}
               isMouseDown={false}
+              startPos={e.start}
+              endPos={e.end}
+              height={chartWrapperRef.current?.clientHeight}
               width={e.end - e.start}
               offsetLeft={e.start}
+              //   ref={eventRef}
             />
           );
         })}
@@ -96,8 +90,11 @@ const SignalView = () => {
         <Event
           height={chartWrapperRef.current?.clientHeight}
           isMouseDown={mouseDown}
+          startPos={start}
+          endPos={end}
           width={end - start}
           offsetLeft={start}
+          //   ref={eventRef}
         />
         {/* You can place events in here as children if you so choose */}
       </Overlay>
