@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 const StyledEvent = styled.div`
@@ -10,8 +10,8 @@ const StyledEvent = styled.div`
   border-radius: 10%;
   top: 10px;
   left: ${(props) => (props.offsetLeft ? props.offsetLeft : 0)}px;
-  ref: ${(props) => props.eventRef};
 `;
+//   ref: ${(props) => props.ref};
 const LeftBorder = styled.div`
   display: ${(props) => props.display};
 
@@ -23,7 +23,6 @@ const LeftBorder = styled.div`
   top: 10px;
   left: ${(props) => (props.offsetLeft ? props.offsetLeft : 0)}px;
 `;
-//   ref: ${(props) => props.eventRef};
 const RightBorder = styled.div`
   display: ${(props) => props.display};
   background: purple;
@@ -36,6 +35,7 @@ const RightBorder = styled.div`
 `;
 
 const Event = (props) => {
+  const eventRef = useRef();
   const { startPos, endPos, isMouseDown } = props;
   const [mouseDown, setMouseDown] = useState(isMouseDown);
   const [startResized, setStartResized] = useState(false);
@@ -58,6 +58,8 @@ const Event = (props) => {
   };
   const handleEventStartMouseMove = (e) => {
     if (!mouseDown) return;
+    console.log(eventRef.current.width);
+
     setStart(e.clientX);
   };
   const handleEventStartMouseLeave = (e) => {
@@ -66,6 +68,8 @@ const Event = (props) => {
   };
   /**************  End Resize *****************/
   const handleEventEndMouseDown = (e) => {
+    // debugger;
+    // console.log(eventRef.current.offsetWidth);
     setEndResized(true);
     setMouseDown(true);
     setEnd(e.clientX);
@@ -92,6 +96,7 @@ const Event = (props) => {
           isMouseDown={mouseDown}
           width={endPos - start}
           offsetLeft={start}
+          ref={eventRef}
         />
       );
     } else if (endResized) {
@@ -101,6 +106,7 @@ const Event = (props) => {
           isMouseDown={mouseDown}
           width={end - startPos}
           offsetLeft={startPos}
+          ref={eventRef}
         />
       );
     } else {
@@ -110,6 +116,7 @@ const Event = (props) => {
           isMouseDown={props.isMouseDown || mouseDown}
           width={endPos - startPos}
           offsetLeft={startPos}
+          ref={eventRef}
         />
       );
     }

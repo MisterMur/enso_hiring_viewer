@@ -23,7 +23,7 @@ const ChartWrapper = styled.div``;
 const SignalView = () => {
   // Access the height of the chart as chartWrapperRef.current?.clientHeight to determine the height to set on events
   const chartWrapperRef = useRef();
-  //   const eventRef = useRef();
+  const eventRef = useRef();
 
   const [mouseDown, setMouseDown] = useState(false);
 
@@ -39,14 +39,15 @@ const SignalView = () => {
   const handleMouseDown = (e) => {
     setMouseDown(true);
     setStart(e.clientX);
+    // console.log(chartWrapperRef.current);
   };
   const handleMouseUp = (e) => {
     if (!mouseDown) return;
     setMouseDown(false);
 
     setEnd(e.clientX);
-    // setEvents([...events]);
-    setEvents([...events, { start, end }]);
+    setEvents([...events, { src: <Event />, start, end, ref: eventRef }]);
+    // setEvents([...events, { start, end }]);
   };
   const handleMouseMove = (e) => {
     if (!mouseDown) return;
@@ -56,6 +57,7 @@ const SignalView = () => {
     setMouseDown(false);
     handleMouseUp(e);
   };
+  // const handleResize = ()=>
 
   return (
     <Container>
@@ -81,6 +83,7 @@ const SignalView = () => {
               height={chartWrapperRef.current?.clientHeight}
               width={e.end - e.start}
               offsetLeft={e.start}
+              ref={e.eventRef}
             />
           );
         })}
@@ -92,6 +95,7 @@ const SignalView = () => {
           endPos={end}
           width={end - start}
           offsetLeft={start}
+          //   ref={eventRef}
         />
         {/* You can place events in here as children if you so choose */}
       </Overlay>
