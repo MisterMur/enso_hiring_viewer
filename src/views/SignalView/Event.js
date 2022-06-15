@@ -49,6 +49,8 @@ const Event = (props) => {
     setMouseDown(true);
     setStartResized(true);
     setStart(e.clientX);
+    // console.log(current);
+    props.handleResize(props.id, startPos);
   };
   const handleEventStartMouseUp = (e) => {
     if (!mouseDown) return;
@@ -92,6 +94,7 @@ const Event = (props) => {
     if (startResized) {
       return (
         <StyledEvent
+          id={props.id}
           height={props.height}
           isMouseDown={mouseDown}
           width={endPos - start}
@@ -102,6 +105,7 @@ const Event = (props) => {
     } else if (endResized) {
       return (
         <StyledEvent
+          id={props.id}
           height={props.height}
           isMouseDown={mouseDown}
           width={end - startPos}
@@ -112,6 +116,7 @@ const Event = (props) => {
     } else {
       return (
         <StyledEvent
+          id={props.id}
           height={props.height}
           isMouseDown={props.isMouseDown || mouseDown}
           width={endPos - startPos}
